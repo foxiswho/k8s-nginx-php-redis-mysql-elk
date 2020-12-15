@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  serviceName: nginx
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          imagePullPolicy: IfNotPresent
+#          resources:
+#            limits:
+#              cpu: 450m
+#              memory: 4000Mi
+#            requests:
+#              cpu: 400m
+#              memory: 4000Mi
+          env:
+            - name: TZ
+              value: Asia/Shanghai
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: vol-conf
+              mountPath: /etc/nginx/conf.d
+            - name: vol-data
+              mountPath: /wwwroot
+      volumes:
+        - name: vol-conf
+          hostPath:
+            path: ./conf
+            type: Directory
+        - name: vol-data
+          hostPath:
+              path: ./wwwroot
+              type: Directory

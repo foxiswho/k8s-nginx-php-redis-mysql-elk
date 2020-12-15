@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+
+  name: php
+  labels:
+    app: php
+spec:
+  serviceName: php
+  replicas: 1
+  selector:
+    matchLabels:
+      app: php
+  template:
+    metadata:
+      labels:
+        app: php
+    spec:
+      containers:
+        - name: php
+          image: foxiswho/php-alpine:php73-fpm
+          imagePullPolicy: IfNotPresent
+#          resources:
+#            limits:
+#              cpu: 450m
+#              memory: 4000Mi
+#            requests:
+#              cpu: 400m
+#              memory: 4000Mi
+          env:
+            - name: TZ
+              value: Asia/Shanghai
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - name: vol-data
+              mountPath: /wwwroot
+      volumes:
+        - name: vol-data
+          hostPath:
+              path: /www/k8s/knprmelk/nginx/wwwroot
+              type: Directory
