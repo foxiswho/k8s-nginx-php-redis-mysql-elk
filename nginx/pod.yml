@@ -40,9 +40,9 @@ spec:
       volumes:
         - name: vol-conf
           hostPath:
-            path: ./conf
+            path: /www/k8s/knprmelk/nginx/conf.d
             type: Directory
         - name: vol-data
           hostPath:
-              path: ./wwwroot
+              path: /www/k8s/knprmelk/nginx/wwwroot
               type: Directory
