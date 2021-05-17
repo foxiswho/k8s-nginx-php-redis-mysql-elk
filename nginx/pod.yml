@@ -32,6 +32,7 @@ spec:
               value: Asia/Shanghai
           ports:
             - containerPort: 6379
+          workingDir: /wwwroot
           volumeMounts:
             - name: vol-conf
               mountPath: /etc/nginx/conf.d
