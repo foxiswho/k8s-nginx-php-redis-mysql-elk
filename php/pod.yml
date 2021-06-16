@@ -35,8 +35,12 @@ spec:
           volumeMounts:
             - name: vol-data
               mountPath: /wwwroot
+            - name: vm-log-default
+              mountPath: /var/log/www/default
       volumes:
         - name: vol-data
           hostPath:
               path: /www/k8s/knprmelk/nginx/wwwroot
               type: Directory
+        - name: vm-log-default
+          emptyDir: { }
